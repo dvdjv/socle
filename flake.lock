@@ -1,0 +1,27 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1709289184,
+        "narHash": "sha256-1949O+iQZ4/+xgqfKe48uFcmDTfeWB3p87ys0+faO6I=",
+        "owner": "dvdjv",
+        "repo": "nixpkgs",
+        "rev": "58f570a5f79f15f4ac60beb8e9f79e308a7c5b89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dvdjv",
+        "ref": "runtime-devtree-overlays",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

@@ -1,0 +1,3 @@
+[
+  (import ./uboot.nix)
+]
