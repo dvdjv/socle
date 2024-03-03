@@ -16,4 +16,7 @@
 
   orangepi-firmware = orangepi-firmware-2024_01_24;
   orangepi-firmware-2024_01_24 = (pkgs.callPackage ./orangepi-firmware.nix {});
+
+  mali-firmware = mali-firmware-g21p0_01eac0;
+  mali-firmware-g21p0_01eac0 = (pkgs.callPackage ./mali-firmware.nix {});
 }
