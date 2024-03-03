@@ -10,5 +10,4 @@
         rev = "120202c675749c5ef81ae4c8cdc30019b4de08f4"; # branch: csf
         hash = "sha256-4eZHMiYS+sRDHNBtLZTA8ELZnLns7yT3USU5YQswxQ0=";
     };
-    patches = [];
 })
