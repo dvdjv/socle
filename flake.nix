@@ -3,17 +3,19 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
   };
 
-  outputs = inputs @ { self, nixpkgs, ...}: let
-    mkPkgs = system: (
-      import nixpkgs {
+  outputs = inputs @ { self, nixpkgs, nixpkgs-23_05, ...}: let
+    mkPkgs = system: ({
+      pkgs = import nixpkgs {
         localSystem = system;
         crossSystem = "aarch64-linux";
 
         overlays = import ./overlays;
-      }
-    );
+      };
+      pkgs-23_05 = import nixpkgs-23_05 { localSystem = system; crossSystem = "aarch64-linux"; };
+    });
 
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
@@ -21,7 +23,7 @@
         "aarch64-linux"
       ] (system: function (mkPkgs system));
   in {
-    packages = forAllSystems (pkgs: import ./packages { inherit self pkgs; } );
+    packages = forAllSystems (pkgsSet: import ./packages { inherit self; inherit (pkgsSet) pkgs pkgs-23_05; } );
 
     nixosModules = (import ./modules) self;
   };

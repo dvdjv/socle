@@ -1,4 +1,4 @@
-{ self, pkgs, ... }: rec {
+{ self, pkgs, pkgs-23_05, ... }: rec {
   u-boot-orangepi-5 = u-boot-orangepi-5-2024_01;
   u-boot-orangepi-5-plus = u-boot-orangepi-5-plus-2024_01;
 
@@ -29,4 +29,6 @@
 
   mesa = mesa-24_0_99-2024_03_04;
   mesa-24_0_99-2024_03_04 = (pkgs.callPackage ./mesa.nix {});
+
+  mesa-panfork = (pkgs-23_05.callPackage ./mesa-panfork.nix {});
 }
