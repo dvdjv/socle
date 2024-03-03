@@ -24,7 +24,11 @@ self: rec {
     };
 
     hardware = {
-      firmware = lib.mkForce (with pkgs; [ self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware ]);
+      opengl.package = self.packages.${pkgs.stdenv.buildPlatform.system}.mesa-panfork.drivers;
+      firmware = lib.mkForce (with pkgs; [
+        self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware
+        self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware
+      ]);
     };
   };
 
