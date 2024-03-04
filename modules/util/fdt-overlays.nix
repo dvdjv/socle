@@ -13,7 +13,7 @@ in {
           "rockchip/overlay/rk3588-wifi-ap6275p.dtbo"
         ]
         '';
-        type = types.listOf types.str;
+        type = lib.types.listOf types.str;
         description = lib.mdDoc ''
         List of overlays to apply at runtime, relative to the dtb base.
         '';
