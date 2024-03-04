@@ -4,7 +4,7 @@
     vulkanDrivers = ["swrast"];
   };
 in mesaP.overrideAttrs {
-    version = "24.0.99-2024.03.04";
+    version = "24.1.0-devel";
     mesonFlags = (with lib; filter (opt: !(hasPrefix "-Dintel-clc" opt))  mesaP.mesonFlags) ++ [
       "-Dintel-clc=auto"
       "-Dintel-rt=disabled"

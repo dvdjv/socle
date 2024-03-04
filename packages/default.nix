@@ -27,8 +27,8 @@
     mali-firmware-g610-g21p0-01eac0
     libmali-valhall-g610-g13p0-x11-wayland-gbm;
 
-  mesa = mesa-24_0_99-2024_03_04;
-  mesa-24_0_99-2024_03_04 = (pkgs.callPackage ./mesa.nix {});
+  mesa = mesa-24_1_0-devel;
+  mesa-24_1_0-devel = (pkgs.callPackage ./mesa.nix {});
 
   mesa-panfork = (pkgs-23_05.callPackage ./mesa-panfork.nix {});
 }
