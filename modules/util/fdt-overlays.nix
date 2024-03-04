@@ -5,7 +5,7 @@
   timeoutStr = if blCfg.timeout == null then "-1" else toString blCfg.timeout;
 in {
   hardware = {
-    enabledOverlays = lib.mkOption {
+    enabledOverlays = with lib; mkOption {
         default = [];
         example = literalExpression ''
         [
@@ -13,8 +13,8 @@ in {
           "rockchip/overlay/rk3588-wifi-ap6275p.dtbo"
         ]
         '';
-        type = lib.types.listOf lib.types.str;
-        description = lib.mdDoc ''
+        type = types.listOf .types.str;
+        description = mdDoc ''
         List of overlays to apply at runtime, relative to the dtb base.
         '';
       };
