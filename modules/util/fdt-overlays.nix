@@ -31,7 +31,7 @@ in {
     builderArgs = "-g ${toString elCfg.configurationLimit} -t ${timeoutStr}"
       + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
       + lib.optionalString (!elCfg.useGenerationDeviceTree) " -r";
-  in mkIf (dtCfg.enable) {
+  in lib.mkIf (dtCfg.enable) {
     system.extraSystemBuilderCmds = ''
         echo ${builtins.concatStringsSep " " config.hardware.deviceTree.enabledOverlays} > $out/devicetree-overlays
       '';
