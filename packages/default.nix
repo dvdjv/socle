@@ -13,6 +13,8 @@
 
   linux-xunlong-rk35xx = linux-xunlong-rk35xx-6_1;
   linux-xunlong-rk35xx-6_1 = (pkgs.callPackage ./linux/xunlong.nix {});
+  linux-armbian-rk35xx = linux-armbian-rk35xx-5_10;
+  linux-armbian-rk35xx-5_10 = (pkgs.callPackage ./linux/armbian.nix {});
 
   orangepi-firmware = orangepi-firmware-2024_01_24;
   orangepi-firmware-2024_01_24 = (pkgs.callPackage ./orangepi-firmware.nix {});
