@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }: let
   dtCfg = config.hardware.deviceTree;
+  blCfg = config.boot.loader;
+  elCfg = blCfg.generic-extlinux-compatible;
+  timeoutStr = if blCfg.timeout == null then "-1" else toString blCfg.timeout;
 in {
   hardware = {
     enabledOverlays = mkOption {
@@ -25,12 +28,12 @@ in {
       inherit (pkgs) bash;
     };
 
-    builderArgs = "-g ${toString cfg.configurationLimit} -t ${timeoutStr}"
+    builderArgs = "-g ${toString elCfg.configurationLimit} -t ${timeoutStr}"
       + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
-      + lib.optionalString (!cfg.useGenerationDeviceTree) " -r";
+      + lib.optionalString (!elCfg.useGenerationDeviceTree) " -r";
   in mkIf (dtCfg.enable) {
     system.extraSystemBuilderCmds = ''
-        echo ${builtins.concatStringsSep " " config.hardware.deviceTree.runtimeOverlays} > $out/devicetree-overlays
+        echo ${builtins.concatStringsSep " " config.hardware.deviceTree.enabledOverlays} > $out/devicetree-overlays
       '';
 
     boot.loader.generic-extlinux-compatible.populateCmd = "${populateBuilder} ${builderArgs}";
