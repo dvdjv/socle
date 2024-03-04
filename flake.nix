@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:dvdjv/nixpkgs/runtime-devtree-overlays";
   };
 
   outputs = inputs @ { self, nixpkgs, ...}: let
