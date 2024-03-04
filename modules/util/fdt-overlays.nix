@@ -33,7 +33,7 @@ in {
       + lib.optionalString (!elCfg.useGenerationDeviceTree) " -r";
   in lib.mkIf (dtCfg.enable) {
     system.extraSystemBuilderCmds = ''
-        echo ${builtins.concatStringsSep " " dtConfig.enabledOverlays } > $out/devicetree-overlays
+        echo ${builtins.concatStringsSep " " dtCfg.enabledOverlays } > $out/devicetree-overlays
       '';
 
     boot.loader.generic-extlinux-compatible.populateCmd = "${populateBuilder} ${builderArgs}";
