@@ -5,7 +5,7 @@
   timeoutStr = if blCfg.timeout == null then "-1" else toString blCfg.timeout;
 in {
   hardware = {
-    enabledOverlays = mkOption {
+    enabledOverlays = lib.mkOption {
         default = [];
         example = literalExpression ''
         [
