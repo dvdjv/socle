@@ -2,8 +2,8 @@
   description = "A collection of packages to support RK3588(S)-based SBCs";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:dvdjv/nixpkgs/runtime-devtree-overlays";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:dvdjv/nixpkgs/runtime-devtree-overlays";
   };
 
   outputs = inputs @ { self, nixpkgs, ...}: let

@@ -1,6 +1,9 @@
 self: rec {
   orangepi-5-base = { lib, pkgs, ... }: {
-    imports = with self.inputs; [ "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix" ];
+    imports = with self.inputs; [
+      "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+      ./util/fdt-overlays.nix
+    ];
 
     nixpkgs.hostPlatform.system = "aarch64-linux";
 
