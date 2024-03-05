@@ -19,4 +19,6 @@
 
   mali-firmware = mali-firmware-g21p0_01eac0;
   mali-firmware-g21p0_01eac0 = (pkgs.callPackage ./mali-firmware.nix {});
+
+  libmali = (pkgs.callPackage ./libmali.nix {});
 }
