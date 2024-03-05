@@ -11,7 +11,7 @@
         rev = "ab3d91e3df2ef1c487c2d8f69daea1729668e428";
         hash = "sha256-VBk1D41we3re9qcjDurtnFZIduARNdwd6RnDir7Xr3o=";
     };
-    buildInputs = [ stdenv.cc.cc.lib ];
+    nativeBuildInputs = [ stdenv.cc.cc.lib ];
 
     installPhase = ''
         runHook preInstall
