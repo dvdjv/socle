@@ -1,4 +1,4 @@
-{ fetchFromGitHub, stdenv, autoPatchElfHook, ... }: stdenv.mkDerivation {
+{ fetchFromGitHub, stdenv, autoPatchelfHook, ... }: stdenv.mkDerivation {
     pname = "libmali";
     version = "g610-g6p0";
     dontBuild = true;
@@ -10,7 +10,7 @@
         rev = "ab3d91e3df2ef1c487c2d8f69daea1729668e428";
         hash = "sha256-VBk1D41we3re9qcjDurtnFZIduARNdwd6RnDir7Xr3o=";
     };
-    nativeBuildInputs = [ autoPatchElfHook ];
+    nativeBuildInputs = [ autoPatchelfHook ];
 
     installPhase = ''
         runHook preInstall
