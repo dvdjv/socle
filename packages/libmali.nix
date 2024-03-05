@@ -1,6 +1,6 @@
 { fetchFromGitHub, stdenv, ... }: stdenv.mkDerivation {
-    pname = "mali-firmware";
-    version = "g21p0-01eac0";
+    pname = "libmali";
+    version = "g610-g6p0";
     dontBuild = true;
     dontFixup = true;
     compressFirmware = false;
