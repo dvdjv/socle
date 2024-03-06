@@ -21,12 +21,12 @@ in {
   };
 
   config = let
-    populateBuilder = pkgs.substituteAll {
+    populateBuilder = pkgs.buildPackages.substituteAll {
       src = ./extlinux-conf-builder.sh;
       isExecutable = true;
       path = [pkgs.coreutils pkgs.gnused pkgs.gnugrep];
       inherit (pkgs) bash;
-    } { pkgs = pkgs.buildPackages; };
+    };
 
     builderArgs = "-g ${toString elCfg.configurationLimit} -t ${timeoutStr}"
       + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
