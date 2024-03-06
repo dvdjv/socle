@@ -36,6 +36,6 @@ in {
         echo ${builtins.concatStringsSep " " dtCfg.enabledOverlays } > $out/devicetree-overlays
       '';
 
-    boot.loader.generic-extlinux-compatible.populateCmd = "${populateBuilder} ${builderArgs}";
+    boot.loader.generic-extlinux-compatible.populateCmd = lib.mkDefault "${populateBuilder} ${builderArgs}";
   };
 }
