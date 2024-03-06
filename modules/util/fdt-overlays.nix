@@ -23,18 +23,7 @@ in {
     };
   };
 
-  config = let
-    populateBuilder = pkgs.buildPackages.substituteAll {
-      src = ./extlinux-conf-builder.sh;
-      isExecutable = true;
-      path = [pkgs.coreutils pkgs.gnused pkgs.gnugrep];
-      inherit (pkgs) bash;
-    };
-
-    builderArgs = "-g ${toString elCfg.configurationLimit} -t ${timeoutStr}"
-      + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
-      + lib.optionalString (!elCfg.useGenerationDeviceTree) " -r";
-  in lib.mkIf (dtCfg.enable) {
+  config = lib.mkIf (dtCfg.enable) {
     system.extraSystemBuilderCmds = ''
         echo ${builtins.concatStringsSep " " dtCfg.enabledOverlays } > $out/devicetree-overlays
       '';
