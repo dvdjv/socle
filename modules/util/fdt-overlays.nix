@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }: let
   dtCfg = config.hardware.deviceTree;
-  blCfg = config.boot.loader;
-  elCfg = blCfg.generic-extlinux-compatible;
-  timeoutStr = if blCfg.timeout == null then "-1" else toString blCfg.timeout;
 in {
   disabledModules = [ "system/boot/loader/generic-extlinux-compatible" ];
   imports = [ ./generic-extlinux-compatible ];
