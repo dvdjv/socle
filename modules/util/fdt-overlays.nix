@@ -4,6 +4,9 @@
   elCfg = blCfg.generic-extlinux-compatible;
   timeoutStr = if blCfg.timeout == null then "-1" else toString blCfg.timeout;
 in {
+  disabledModules = [ "system/boot/loader/generic-extlinux-compatible" ];
+  imports = [ ./generic-extlinux-compatible ];
+
   options = {
       hardware.deviceTree.enabledOverlays = with lib; mkOption {
       default = [];
@@ -36,6 +39,6 @@ in {
         echo ${builtins.concatStringsSep " " dtCfg.enabledOverlays } > $out/devicetree-overlays
       '';
 
-    boot.loader.generic-extlinux-compatible.populateCmd = lib.mkForce "${populateBuilder} ${builderArgs}";
+    # boot.loader.generic-extlinux-compatible.populateCmd = lib.mkForce "${populateBuilder} ${builderArgs}";
   };
 }
