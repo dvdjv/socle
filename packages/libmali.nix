@@ -1,4 +1,4 @@
-{ fetchFromGitHub, stdenv, autoPatchelfHook, ... }: stdenv.mkDerivation {
+{ fetchFromGitHub, stdenv, autoPatchelfHook, libdrm, ... }: stdenv.mkDerivation {
     pname = "libmali";
     version = "g610-g6p0";
     dontBuild = true;
@@ -11,15 +11,24 @@
         hash = "sha256-VBk1D41we3re9qcjDurtnFZIduARNdwd6RnDir7Xr3o=";
     };
     nativeBuildInputs = [ autoPatchelfHook ];
-    buildInputs = [ stdenv.cc.cc.lib ];
+    buildInputs = [ stdenv.cc.cc.lib, libdrm ];
 
     installPhase = ''
         runHook preInstall
 
         mkdir -p $out/lib
         mkdir -p $out/etc/OpenCL/vendors
-        install --mode=555 lib/aarch64-linux-gnu/libmali-valhall-g610-g6p0-dummy.so $out/lib
-        echo $out/lib/libmali-valhall-g610-g6p0-dummy.so > $out/etc/OpenCL/vendors/mali.icd
+        mkdir -p $out/share/glvnd/egl_vendor.d
+        install --mode=555 lib/aarch64-linux-gnu/libmali-valhall-g610-g6p0-gbm.so $out/lib
+        echo $out/lib/libmali-valhall-g610-g6p0-gbm.so > $out/etc/OpenCL/vendors/mali.icd
+        cat > $out/share/glvnd/egl_vendor.d/40_mali.json << EOF
+        {
+          "file_format_version" : "1.0.0",
+          "ICD" : {
+            "library_path" : "$out/lib/libmali-valhall-g610-g6p0-gbm.so"
+          }
+        }
+        EOF
 
         runHook postInstall
     '';
