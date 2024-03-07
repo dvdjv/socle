@@ -11,7 +11,7 @@
         hash = "sha256-VBk1D41we3re9qcjDurtnFZIduARNdwd6RnDir7Xr3o=";
     };
     nativeBuildInputs = [ autoPatchelfHook ];
-    buildInputs = [ stdenv.cc.cc.lib, libdrm ];
+    buildInputs = [ stdenv.cc.cc.lib libdrm ];
 
     installPhase = ''
         runHook preInstall
