@@ -5,8 +5,6 @@ self: rec {
       ./util/fdt-overlays.nix
     ];
 
-    nixpkgs.hostPlatform.system = "aarch64-linux";
-
     boot = {
       supportedFilesystems = lib.mkForce [
         "vfat"
