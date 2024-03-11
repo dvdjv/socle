@@ -28,9 +28,10 @@ self: rec {
 
     hardware = {
       opengl.enable = true;
+      opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
       firmware = lib.mkForce (with pkgs; [
         self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware
-        self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware
+        self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
       ]);
     };
   };
