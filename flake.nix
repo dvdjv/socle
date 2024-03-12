@@ -3,19 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-23_05, ...}: let
-    mkPkgs = system: ({
-      pkgs = import nixpkgs {
+  outputs = inputs @ { self, nixpkgs, ...}: let
+    mkPkgs = system: (
+      import nixpkgs {
         localSystem = system;
         crossSystem = "aarch64-linux";
 
         overlays = import ./overlays;
-      };
-      pkgs-23_05 = import nixpkgs-23_05 { localSystem = system; crossSystem = "aarch64-linux"; };
-    });
+      }
+    );
 
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
