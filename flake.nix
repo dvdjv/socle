@@ -21,7 +21,7 @@
         "aarch64-linux"
       ] (system: function (mkPkgs system));
   in {
-    packages = forAllSystems (pkgsSet: import ./packages { inherit self; inherit (pkgsSet) pkgs pkgs-23_05; } );
+    packages = forAllSystems (pkgs: import ./packages { inherit self pkgs; } );
 
     nixosModules = (import ./modules) self;
   };
