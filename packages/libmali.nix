@@ -37,6 +37,10 @@ in {
     nativeBuildInputs = [ autoPatchelfHook ];
     buildInputs = [ stdenv.cc.cc.lib libdrm wayland libxcb libX11 ];
 
+    preBuild = ''
+      addAutoPatchelfSearchPath ${stdenv.cc.cc.lib}/aarch-unknown-linux-gnu/lib
+    '';
+
     installPhase = let
       libmaliFileName = "${pname}-${version}-${variant}.so";
     in ''
