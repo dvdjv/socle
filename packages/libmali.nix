@@ -29,13 +29,16 @@ in {
     pname = "libmali-valhall-g610";
     version = "g13p0";
     variant = "x11-wayland-gbm";
-    dontBuild = true;
     dontConfigure = true;
 
     inherit src;
 
     nativeBuildInputs = [ autoPatchelfHook ];
     buildInputs = [ stdenv.cc.cc.lib libdrm wayland libxcb libX11 ];
+
+    preBuild = ''
+      addAutoPatchelfSearchPath ${stdenv.cc.cc.lib}/aarch64-unknown-linux-gnu/lib
+    '';
 
     installPhase = let
       libmaliFileName = "${pname}-${version}-${variant}.so";
