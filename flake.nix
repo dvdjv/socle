@@ -24,5 +24,12 @@
     packages = forAllSystems (pkgs: import ./packages { inherit self pkgs; } );
 
     nixosModules = (import ./modules) self;
+
+    templates = {
+      orangepi-5x = {
+        path = ./templates/orangepi-5x;
+        description = "A template for Orange Pi 5 family of SBCs";
+      };
+    };
   };
 }
