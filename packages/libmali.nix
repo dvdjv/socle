@@ -38,7 +38,7 @@ in {
     buildInputs = [ stdenv.cc.cc.lib libdrm wayland libxcb libX11 ];
 
     preBuild = ''
-      addAutoPatchelfSearchPath ${stdenv.cc.cc.lib}/aarch-unknown-linux-gnu/lib
+      addAutoPatchelfSearchPath ${stdenv.cc.cc.lib}/aarch64-unknown-linux-gnu/lib
     '';
 
     installPhase = let
