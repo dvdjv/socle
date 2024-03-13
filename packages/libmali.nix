@@ -29,7 +29,6 @@ in {
     pname = "libmali-valhall-g610";
     version = "g13p0";
     variant = "x11-wayland-gbm";
-    dontBuild = true;
     dontConfigure = true;
 
     inherit src;
