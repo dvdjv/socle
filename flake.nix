@@ -25,7 +25,7 @@
 
     nixosModules = (import ./modules) self;
 
-    templates = {
+    templates = rec {
       default = orangepi-5x;
       orangepi-5x = {
         path = ./templates/orangepi-5x;
