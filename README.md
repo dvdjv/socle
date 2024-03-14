@@ -1,57 +1,42 @@
 # socle
 [Wikipedia](https://en.wikipedia.org/wiki/Socle_(architecture)): In architecture, a socle is a short plinth used to support a pedestal, sculpture, or column.
 
-A Nix flake to support single board computers based on the RK3588(S) SoC. Currently the following boards are supported:
+A collection of packages and modules to support NixOS on single board computers based on the RK3588(S) SoC. Currently the following boards are supported:
 * Orange Pi 5
 * Orange Pi 5 Plus
 
 ## Features
 * Linux Kernel 6.1
 * U-Boot 2024.01
-* An option to enable/disable device tree overlays
+* OpenCL 3.0 with libmali
+* An option to enable device tree overlays
 
 ## Usage
-Use the following flake to build a SD image:
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    socle = {
-      url = "github:dvdjv/socle/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+Socle provides a template you can use as a base for your new NixOS installation.
 
-  outputs = inputs @ {self, nixpkgs, socle, ...}: {
-    nixosConfigurations = {
-      orangepi5 = nixpkgs.lib.nixosSystem {
-        modules = [
-          socle.nixosModules.orangepi-5
+### Building SD image
+1. Clone the template
+   ```
+   nix flake new --template github:dvdjv/socle nixos
+   ```
+   This will create a directory named `nixos` with the system configuration in it.
+2. Edit the configuration
 
-          {
-            nixpkgs.buildPlatform.system = "x86_64-linux";
+   Open the file `nixos/flake.nix` in a text editor and locate the following lines:
+   ```
+   # socle.nixosModules.orangepi-5
+   # socle.nixosModules.orangepi-5-plus
+   ```
+   Uncomment one of the lines depending on the model of your board. You can tune other options as well. Consult the [NixOS manual](https://nixos.org/manual/nixos/stable/options) for the list of possible options.
+4. Build the image
+   ```
+   nix build .#nixosConfigurations.nixos.config.system.build.sdImage
+   ```
+5. Flash the image
+   ```
+   zstdcat result/sd-image/nixos-sd-image-23.11pre-git-aarch64-linux.img.zst | dd of=/dev/sdX bs=1M
+   ```
+   Where `/dev/sdX` is the device node corresponding to your SD card.
 
-            services.openssh.enable = true;
-
-            hardware.deviceTree.enabledOverlays = [
-              # "rockchip/overlay/rk3588-disable-led.dtbo"
-              # "rockchip/overlay/rk3588-wifi-ap6275p.dtbo"
-            ];
-            nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-            networking.hostName = "orangepi5";
-
-            users.users.nixos = {
-              isNormalUser = true;
-              password = "nixos";
-              extraGroups = [ "wheel" ];
-            };
-          }
-        ];
-      };
-    };
-  };
-}
-
-```
-Build the image with `nix build .#nixosConfigurations.orangepi5.config.system.build.sdImage`. For Orange Pi 5 Plus replace `socle.nixosModules.orangepi-5` with `socle.nixosModules.orangepi-5-plus`. You can turn device tree overlays on and off using the `hardware.deviceTree.enabledOverlays` option.
+### Device Tree Overlays
+Device tree overlays can be enableb by means of the `hardware.deviceTree.enabledOverlays` option. However, this is internal API and will change in the future.
