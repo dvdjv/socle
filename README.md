@@ -9,7 +9,7 @@ A collection of packages and modules to support NixOS on single board computers 
 * Linux Kernel 6.1
 * U-Boot 2024.01
 * OpenCL 3.0 with libmali
-* An option to enable device tree overlays
+* Options to enable device tree overlays
 
 ## Usage
 Socle provides a template you can use as a base for your new NixOS installation.
@@ -39,4 +39,4 @@ Socle provides a template you can use as a base for your new NixOS installation.
    Where `/dev/sdX` is the device node corresponding to your SD card.
 
 ### Device Tree Overlays
-Device tree overlays can be enableb by means of the `hardware.deviceTree.enabledOverlays` option. However, this is internal API and will change in the future.
+Device tree overlays can be enableb by means of the `board.hardware.enabled` option. Some examples are given in the flake templates. The full list of the hardware options is available in the source code of the board specific modules.

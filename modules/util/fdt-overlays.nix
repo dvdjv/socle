@@ -14,6 +14,7 @@ in {
       ]
       '';
       type = types.listOf types.str;
+      internal = true;
       description = mdDoc ''
       List of overlays to apply at runtime, relative to the dtb base.
       '';
