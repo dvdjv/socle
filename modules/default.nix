@@ -12,9 +12,10 @@ self: rec {
     options.sbc = {
       hardware = {
         led.disabled = mkRockchipOption {
-          overlay = "rk3588-disable-led.dtbo";
+          overlay = "rk3588-disable-led";
           description = "Disable LED";
         };
+        wifi-ap6275p.enabled = mkRockchipOption { overlay = "rk3588-wifi-ap6275p" };
       };
     };
 
