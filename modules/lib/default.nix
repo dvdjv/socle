@@ -1,7 +1,7 @@
 { lib }: {
   mkOverlayOption = with lib;
   prefix: {
-    ovelay,
+    overlay,
     description ? mdDoc "Whether to enable ${overlay} device tree overlay"
   }: mkOption {
     inherit description;
