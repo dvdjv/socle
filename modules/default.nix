@@ -12,7 +12,7 @@ self: rec {
     options.sbc = {
       hardware = {
         led.disabled = mkRockchipOption {
-          ovelay = "rk3588-disable-led.dtbo";
+          overlay = "rk3588-disable-led.dtbo";
           description = "Disable LED";
         };
       };
