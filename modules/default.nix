@@ -61,10 +61,11 @@ self: rec {
         initrd.availableKernelModules = lib.mkForce [];
 
         kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-xunlong-rk35xx;
-        sdImage = {
-          firmwarePartitionOffset = 16;
-          postBuildCommands = "dd if=${boardCfg.uBootPackage}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
-        };
+      };
+      
+      sdImage = {
+        firmwarePartitionOffset = 16;
+        postBuildCommands = "dd if=${boardCfg.uBootPackage}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
       };
 
       hardware = {
