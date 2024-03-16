@@ -40,7 +40,7 @@ in rec {
   orangepi-5 = { pkgs, ... }: {
     options.orangepi-5 = {
       hardware = {
-        leds.disabled = mkRockchipOption {
+        led.disabled = mkRockchipOption {
           ovelay = "rk3588-disable-led.dtbo";
           description = "Disable LED";
         };
