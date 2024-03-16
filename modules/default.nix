@@ -21,7 +21,7 @@ self: rec {
       initrd.includeDefaultModules = lib.mkForce false;
       initrd.availableKernelModules = lib.mkForce [];
 
-      kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-xunlong-rk35xx;
+      kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-armbian-rk35xx;
     };
 
     hardware = {
