@@ -48,7 +48,7 @@ in rec {
     };
     imports = [ orangepi-5-base ];
 
-    sdImage = {
+    config.sdImage = {
       firmwarePartitionOffset = 16;
       postBuildCommands = "dd if=${self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
     };
