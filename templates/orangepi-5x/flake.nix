@@ -24,11 +24,17 @@
           # You can set your timezone here
           # time.timeZone = "Europe/Dublin";
 
-          # Device tree overlays can be enabled here
-          hardware.deviceTree.enabledOverlays = [
-            # "rockchip/overlay/rk3588-disable-led.dtbo"
-            # "rockchip/overlay/rk3588-wifi-ap6275p.dtbo"
-          ];
+          # Hardware can be turned on and off here
+          board.hardware.enabled = {
+            # If you are useing Orange Pi 5, uncomment the line below to turn the LED off
+            # led = false;
+
+            # If you are using Orange Pi 5 Plus, uncomment the line below to turn the LEDs off
+            # leds = false;
+
+            # Uncomment the line below to turn on the AP6275P Wi-Fi module
+            # wifi-ap6275p = true;
+          };
 
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
