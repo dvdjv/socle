@@ -40,7 +40,7 @@ self: rec {
       };
 
       hardware = {
-        deviceTree.enabledOverlays = sbcCfg.hardware.led.disabled;
+        deviceTree.enabledOverlays = sbcCfg.hardware.led.disabled ++ sbcCfg.hardware.wifi-ap6275p.enabled;
         opengl.enable = true;
         opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
         firmware = lib.mkForce (with pkgs; [
