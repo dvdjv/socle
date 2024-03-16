@@ -1,7 +1,8 @@
 self: rec {
-  orangepi-5-base = { lib, pkgs, ... }: let
+  orangepi-5-base = { lib, pkgs, config, ... }: let
     inherit ((import ./lib) { inherit lib; }) mkOverlayOption;
     mkRockchipOption = mkOverlayOption "rockchip/overlay";
+    sbcCfg = config.sbc;
   in {
     imports = with self.inputs; [
       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -45,7 +46,7 @@ self: rec {
           self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
         ]);
       };
-    };
+    } // sbcCfg.hardware.led.disabled;
   };
 
   orangepi-5 = { pkgs, ... }: {
