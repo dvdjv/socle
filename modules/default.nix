@@ -1,4 +1,7 @@
-self: rec {
+self: let
+  inherit (import ./lib) mkOverlayOption;
+  mkRockchipOption = mkOverlayOption "rockchip/overlay";
+in rec {
   orangepi-5-base = { lib, pkgs, ... }: {
     imports = with self.inputs; [
       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -35,6 +38,14 @@ self: rec {
   };
 
   orangepi-5 = { pkgs, ... }: {
+    options.orangepi-5 = {
+      hardware = {
+        leds.disabled = mkRockchipOption {
+          ovelay = "rk3588-disable-led.dtbo";
+          description = "Disable LED";
+        };
+      };
+    };
     imports = [ orangepi-5-base ];
 
     sdImage = {
