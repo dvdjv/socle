@@ -8,9 +8,6 @@
     default = false;
     example = true;
     type = types.bool;
-    apply = enabled: {
-      config.hardware.deviceTree.enabledOverlays =
-        if enabled then ["${prefix}/${overlay}.dtbo"] else [];
-    };
+    apply = enabled: if enabled then ["${prefix}/${overlay}.dtbo"] else [];
   };
 }

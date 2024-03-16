@@ -39,6 +39,7 @@ self: rec {
       };
 
       hardware = {
+        deviceTree.enabledOverlays = sbcCfg.hardware.led.disabled;
         opengl.enable = true;
         opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
         firmware = lib.mkForce (with pkgs; [
@@ -46,7 +47,7 @@ self: rec {
           self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
         ]);
       };
-    } // sbcCfg.hardware.led.disabled;
+    };
   };
 
   orangepi-5 = { pkgs, ... }: {
