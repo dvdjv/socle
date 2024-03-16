@@ -1,44 +1,14 @@
-self: let
-  inherit (import ./lib) mkOverlayOption;
-  mkRockchipOption = mkOverlayOption "rockchip/overlay";
-in rec {
-  orangepi-5-base = { lib, pkgs, ... }: {
+self: rec {
+  orangepi-5-base = { lib, pkgs, ... }: let
+    inherit ((import ./lib) { inherit lib; }) mkOverlayOption;
+    mkRockchipOption = mkOverlayOption "rockchip/overlay";
+  in {
     imports = with self.inputs; [
       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       ./util/fdt-overlays.nix
     ];
 
-    boot = {
-      supportedFilesystems = lib.mkForce [
-        "vfat"
-        "fat32"
-        "exfat"
-        "ext4"
-        "btrfs"
-      ];
-
-      kernelParams = [
-        "console=ttyFIQ0,1500000n8"
-      ];
-
-      initrd.includeDefaultModules = lib.mkForce false;
-      initrd.availableKernelModules = lib.mkForce [];
-
-      kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-xunlong-rk35xx;
-    };
-
-    hardware = {
-      opengl.enable = true;
-      opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
-      firmware = lib.mkForce (with pkgs; [
-        self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware
-        self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
-      ]);
-    };
-  };
-
-  orangepi-5 = { pkgs, ... }: {
-    options.orangepi-5 = {
+    options.sbc = {
       hardware = {
         led.disabled = mkRockchipOption {
           ovelay = "rk3588-disable-led.dtbo";
@@ -46,6 +16,40 @@ in rec {
         };
       };
     };
+
+    config = {
+      boot = {
+        supportedFilesystems = lib.mkForce [
+          "vfat"
+          "fat32"
+          "exfat"
+          "ext4"
+          "btrfs"
+        ];
+
+        kernelParams = [
+          "console=ttyFIQ0,1500000n8"
+        ];
+
+        initrd.includeDefaultModules = lib.mkForce false;
+        initrd.availableKernelModules = lib.mkForce [];
+
+        kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-xunlong-rk35xx;
+      };
+
+      hardware = {
+        opengl.enable = true;
+        opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
+        firmware = lib.mkForce (with pkgs; [
+          self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware
+          self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
+        ]);
+      };
+    };
+  };
+
+  orangepi-5 = { pkgs, ... }: {
+    
     imports = [ orangepi-5-base ];
 
     config.sdImage = {
