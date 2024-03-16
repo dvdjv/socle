@@ -35,7 +35,7 @@ self: rec {
     };
 
     config = {
-      sbc.hardware.available = {
+      board.hardware.available = {
         led = {
           overlay = "rk3588-disable-led";
           inverse = true;
