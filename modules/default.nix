@@ -1,26 +1,36 @@
 self: rec {
-  orangepi-5-base = { lib, pkgs, config, ... }: let
+  rk3588x-board = { lib, pkgs, config, ... }: let
     inherit ((import ./lib) { inherit lib; }) mkOverlayOption;
     mkRockchipOption = mkOverlayOption "rockchip/overlay";
-    sbcCfg = config.sbc;
+
+    boardCfg = config.board;
   in {
     imports = with self.inputs; [
       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       ./util/fdt-overlays.nix
     ];
 
-    options.sbc = {
+    options.board = with lib; {
+      name = mkOption {
+        type = types.str;
+        internal = true;
+        readOnly = true;
+      };
+
+      uBootPackage = mkOption {
+        type = types.package;
+        internal = true;
+        readOnly = true;
+      };
+
       hardware = {
-        available = with lib; mkOption {
+        available = mkOption {
           type = types.attrs;
           internal = true;
           readOnly = true;
         };
 
-        enabled = builtins.mapAttrs (_: args: mkRockchipOption args) sbcCfg.hardware.available;
-
-        
-        
+        enabled = builtins.mapAttrs (_: args: mkRockchipOption args) boardCfg.hardware.available;
       };
     };
 
@@ -51,10 +61,14 @@ self: rec {
         initrd.availableKernelModules = lib.mkForce [];
 
         kernelPackages = pkgs.linuxPackagesFor self.packages.${pkgs.stdenv.buildPlatform.system}.linux-xunlong-rk35xx;
+        sdImage = {
+          firmwarePartitionOffset = 16;
+          postBuildCommands = "dd if=${boardCfg.uBootPackage}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
+        };
       };
 
       hardware = {
-        deviceTree.enabledOverlays = with builtins; concatLists (attrValues sbcCfg.hardware.enabled);
+        deviceTree.enabledOverlays = with builtins; concatLists (attrValues boardCfg.hardware.enabled);
         opengl.enable = true;
         opengl.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
         firmware = lib.mkForce (with pkgs; [
@@ -66,21 +80,20 @@ self: rec {
   };
 
   orangepi-5 = { pkgs, ... }: {
-    
-    imports = [ orangepi-5-base ];
+    imports = [ rk3588x-board ];
 
-    config.sdImage = {
-      firmwarePartitionOffset = 16;
-      postBuildCommands = "dd if=${self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
+    board = {
+      name = "Orange Pi 5";
+      uBootPackage = self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5;
     };
   };
 
   orangepi-5-plus = { pkgs, ... }: {
-    imports = [ orangepi-5-base ];
+    imports = [ rk3588x-board ];
 
-    sdImage = {
-      firmwarePartitionOffset = 16;
-      postBuildCommands = "dd if=${self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5-plus}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
+    board = {
+      name = "Orange Pi 5 Plus";
+      uBootPackage = self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5-plus;
     };
   };
 }
