@@ -11,6 +11,6 @@
     apply = enabled: {
       config.hardware.deviceTree.enabledOverlays =
         if enabled then ["${prefix}/${overlay}.dtbo"] else [];
-    }
+    };
   }
 }
