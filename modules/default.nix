@@ -11,15 +11,29 @@ self: rec {
 
     options.sbc = {
       hardware = {
-        led.disabled = mkRockchipOption {
-          overlay = "rk3588-disable-led";
-          description = "Disable LED";
+        available = with lib; mkOption {
+          type = types.attrs;
+          internal = true;
+          readOnly = true;
         };
-        wifi-ap6275p.enabled = mkRockchipOption { overlay = "rk3588-wifi-ap6275p"; };
+
+        enabled = builtins.mapAttrs (_: args: mkRockchipOption args) sbcCfg.hardware.available;
+
+        
+        
       };
     };
 
     config = {
+      soc.hardware.available = {
+        led = {
+          overlay = "rk3588-disable-led";
+          inverse = true;
+          description = "Whether to disable LED";
+        };
+
+        wifi-ap6275p = { overlay = "rk3588-wifi-ap6275p"; };
+      };
       boot = {
         supportedFilesystems = lib.mkForce [
           "vfat"

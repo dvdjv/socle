@@ -2,12 +2,13 @@
   mkOverlayOption = with lib;
   prefix: {
     overlay,
-    description ? mdDoc "Whether to enable ${overlay} device tree overlay"
+    inverse ? false,
+    description ? mdDoc "Whether to enable ${overlay}"
   }: mkOption {
     inherit description;
-    default = false;
+    default = inverse;
     example = true;
     type = types.bool;
-    apply = enabled: if enabled then ["${prefix}/${overlay}.dtbo"] else [];
+    apply = enabled: if enabled != inverse then [ "${prefix}/${overlay}.dtbo" ] else [];
   };
 }
