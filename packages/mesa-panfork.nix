@@ -6,13 +6,17 @@
   mesaP = mesa.override {
     galliumDrivers = ["panfrost" "swrast"];
     vulkanDrivers = ["swrast"];
+    enableOSMesa = false;
   };
 in mesaP.overrideAttrs (_: {
     pname = "mesa-panfork";
     version = "23.0.0-panfork";
     patches = [];
     mesonFlags = with lib;
-      filter (flag: !((hasPrefix "-Dandroid-libbacktrace" flag) || (hasPrefix "-Ddisk-cache-key" flag))) mesaP.mesonFlags;
+      filter (flag: !((hasPrefix "-Dandroid-libbacktrace" flag) || (hasPrefix "-Ddisk-cache-key" flag))) mesaP.mesonFlags ++
+      [
+        "-Dgles1=disabled"
+      ];
     src = fetchFromGitLab {
       owner = "panfork";
       repo = "mesa";
