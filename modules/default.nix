@@ -76,7 +76,7 @@ self: rec {
 
     board = {
       name = "Orange Pi 5";
-      uBootPackage = self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5;
+      uBootPackage = pkgs.ubootOrangePi5;
 
       hardware.available = {
         led = {
@@ -135,7 +135,7 @@ self: rec {
 
     board = {
       name = "Orange Pi 5 Plus";
-      uBootPackage = self.packages.${pkgs.stdenv.buildPlatform.system}.u-boot-orangepi-5-plus;
+      uBootPackage = pkgs.ubootOrangePi5Plus;
 
       hardware.available = {
         leds = {
