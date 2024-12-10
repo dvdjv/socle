@@ -1,4 +1,4 @@
-{ linuxManualConfig, fetchFromGitHub, ... }: linuxManualConfig rec {
+{ linuxManualConfig, fetchFromGitHub, ubootTools, ... }: (linuxManualConfig rec {
   src = fetchFromGitHub {
     owner = "orangepi-xunlong";
     repo = "linux-orangepi";
@@ -10,4 +10,6 @@
   extraMeta.branch = "6.1";
   configfile = ./config/linux-${version}.config;
   allowImportFromDerivation = true;
-}
+}).overrideAttrs (old: {
+  nativeBuildInputs = old.nativeBuildInputs ++ [ ubootTools ];
+})
