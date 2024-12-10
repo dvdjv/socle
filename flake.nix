@@ -10,8 +10,6 @@
       import nixpkgs {
         localSystem = system;
         crossSystem = "aarch64-linux";
-
-        overlays = import ./overlays;
       }
     );
 
