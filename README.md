@@ -7,7 +7,6 @@ A collection of packages and modules to support NixOS on single board computers 
 
 ## Features
 * Linux Kernel 6.1
-* U-Boot 2024.01
 * OpenCL 3.0 with libmali
 * Options to enable device tree overlays
 
@@ -30,7 +29,7 @@ Socle provides a template you can use as a base for your new NixOS installation.
    Uncomment one of the lines depending on the model of your board. You can tune other options as well. Consult the [NixOS manual](https://nixos.org/manual/nixos/stable/options) for the list of possible options.
 4. Build the image
    ```
-   nix build .#nixosConfigurations.nixos.config.system.build.sdImage
+   nix build .#nixosConfigurations.nixos.sdImage
    ```
 5. Flash the image
    ```
