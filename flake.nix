@@ -23,6 +23,18 @@
 
     nixosModules = (import ./modules) self;
 
+    checks = forAllSystems (pkgs: {
+      orangepi-5 = (pkgs.nixos [
+        self.nixosModules.orangepi-5
+        { system.stateVersion = "24.11"; }
+      ]).config.system.build.sdImage;
+
+      orangepi-5-plus = (pkgs.nixos [
+        self.nixosModules.orangepi-5-plus
+        { system.stateVersion = "24.11"; }
+      ]).config.system.build.sdImage;
+    });
+
     templates = rec {
       default = orangepi-5x;
       orangepi-5x = {
