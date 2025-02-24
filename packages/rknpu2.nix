@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, ... }: let
+{ stdenv, fetchFromGitHub, autoPatchelfHook, ... }: let
   src = fetchFromGitHub {
     owner = "rockchip-linux";
     repo = "rknpu2";
