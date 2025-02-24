@@ -12,6 +12,10 @@ in stdenv.mkDerivation {
 
     inherit src;
 
+    preBuild = ''
+      addAutoPatchelfSearchPath ${stdenv.cc.cc.lib}/aarch64-unknown-linux-gnu/lib
+    '';
+
     installPhase = ''
       runHook preInstall
 
