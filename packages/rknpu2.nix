@@ -1,13 +1,13 @@
 { stdenv, fetchFromGitHub, autoPatchelfHook, ... }: let
   src = fetchFromGitHub {
-    owner = "rockchip-linux";
-    repo = "rknpu2";
-    rev = "5adf7c1bd17e169e9880ccdf3b49adde925ab7f9";
+    owner = "airockchip";
+    repo = "rknn-toolkit2";
+    rev = "a8dd54d41e92c95b4f95780ed0534362b2c98b92";
     hash = "sha256-9szvZmMreyuigeAUe8gIQgBzK/f9c9IgsIUAuHNguRU=";
   };
 in stdenv.mkDerivation {
     pname = "rknpu2-rk3588";
-    version = "1.5.2";
+    version = "2.3.0";
     dontConfigure = true;
 
     inherit src;
@@ -20,7 +20,6 @@ in stdenv.mkDerivation {
 
       mkdir -p $out/lib
       install --mode=755 runtime/RK3588/Linux/librknn_api/aarch64/librknnrt.so $out/lib
-      ln -s $out/lib/librknnrt.so $out/lib/librknn_api.so
 
       runHook postInstall
     '';
