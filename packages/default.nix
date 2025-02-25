@@ -1,7 +1,4 @@
-{ self, pkgs, ... }: let
-  u-boot-orangepi-rk35xx = (pkgs.callPackage ./uboot.nix {});
-
-in rec {
+{ self, pkgs, ... }: rec {
   linux-xunlong-rk35xx = linux-xunlong-rk35xx-6_1;
   linux-xunlong-rk35xx-6_1 = (pkgs.callPackage ./linux/xunlong.nix {});
 
