@@ -16,6 +16,6 @@ in rec {
     mali-firmware-g610-g21p0-01eac0
     libmali-valhall-g610-g13p0-x11-wayland-gbm;
 
-  librknnrt-rk3588-1_5_2 = (pkgs.callPackage ./rknpu2.nix {});
+  librknnrt-rk3588-1_5_2 = (pkgs.callPackage ./rknn-toolkit2.nix {});
   librknnrt-rk3588 = librknnrt-rk3588-1_5_2;
 }
