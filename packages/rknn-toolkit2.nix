@@ -14,12 +14,17 @@ in stdenv.mkDerivation {
 
     nativeBuildInputs = [ autoPatchelfHook ];
     buildInputs = [ stdenv.cc.cc.lib ];
+    outputs = [ "out" "dev" ];
 
     installPhase = ''
       runHook preInstall
 
       mkdir -p $out/lib
       install --mode=755 rknpu2/runtime/Linux/librknn_api/aarch64/librknnrt.so $out/lib
+      mkdir -p $dev/include
+      install --mode=644 rknpu2/runtime/Linux/librknn_api/include/rknn_api.h $dev/include
+      install --mode=644 rknpu2/runtime/Linux/librknn_api/include/rknn_custom_op.h $dev/include
+      install --mode=644 rknpu2/runtime/Linux/librknn_api/include/rknn_matmul_api.h $dev/include
 
       runHook postInstall
     '';
