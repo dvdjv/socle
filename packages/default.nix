@@ -17,5 +17,5 @@ in rec {
     libmali-valhall-g610-g13p0-x11-wayland-gbm;
 
   librknnrt-1_5_2 = (pkgs.callPackage ./rknn-toolkit2.nix {});
-  librknnrt = librknnrt-rk3588-1_5_2;
+  librknnrt = librknnrt-1_5_2;
 }
