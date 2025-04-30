@@ -24,17 +24,53 @@ self: rec {
       };
 
       hardware = {
+
         available = mkOption {
           type = types.attrs;
           internal = true;
           readOnly = true;
         };
 
-        enabled = builtins.mapAttrs (_: args: mkRockchipOption args) boardCfg.hardware.available;
+        customOverlays = mkOption {
+          type = types.attrsOf (types.submodule {
+            options = {
+              overlay = mkOption {
+                type = types.str;
+                description = "Name of the device tree overlay (without path or extension).";
+              };
+              inverse = mkOption {
+                type = types.bool;
+                default = false;
+                description = "Whether the overlay is disabled when enabled (e.g., for disable-LED overlays).";
+              };
+              description = mkOption {
+                type = types.str;
+                default = "";
+                description = "Description of the custom overlay.";
+              };
+            };
+          });
+          default = {};
+          description = ''
+            Additional hardware overlays to make available for the board.
+            These are merged with the predefined hardware.available overlays.
+            Ensure the corresponding .dtbo files are included in hardware.firmware,
+            e.g., by adding a package that installs them to /rockchip/overlay.
+          '';
+        };
+
+        enabled = builtins.mapAttrs (_: args: mkRockchipOption args)
+          # Merge predefined and custom overlays
+          (lib.mergeAttrs boardCfg.hardware.available boardCfg.hardware.customOverlays);
       };
     };
 
     config = {
+      assertions = lib.mapAttrsToList (name: _: {
+        assertion = ! (lib.hasAttr name boardCfg.hardware.available) || (boardCfg.hardware.customOverlays.${name}.overlay == boardCfg.hardware.available.${name}.overlay);
+        message = "Custom overlay '${name}' overrides a predefined overlay with a different configuration, which may be unintended.";
+      }) boardCfg.hardware.customOverlays;
+
       boot = {
         supportedFilesystems = lib.mkForce [
           "vfat"
