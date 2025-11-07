@@ -1,0 +1,14 @@
+on: workflow_dispatch
+jobs:
+  build-image:
+    name: "Flake checks"
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: "Checkout flake"
+        uses: actions/checkout@v5
+      - name: "Install nix"
+        uses: cachix/install-nix-action@v31
+      - name: "Run checks"
+        run: nix flake check
+
+      
