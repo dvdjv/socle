@@ -95,6 +95,8 @@ self: rec {
         postBuildCommands = "dd if=${boardCfg.uBootPackage}/u-boot-rockchip.bin of=$img seek=64 conv=notrunc";
       };
 
+      environment.defaultPackages = with self.packages.${pkgs.stdenv.buildPlatform.system}; [ librknnrt ];
+
       hardware = {
         deviceTree.enabledOverlays = with builtins; concatLists (attrValues boardCfg.hardware.enabled);
         graphics.enable = true;
