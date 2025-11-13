@@ -1,6 +1,6 @@
 on: workflow_dispatch
 jobs:
-  build-image:
+  flake-check:
     name: "Flake checks"
     runs-on: ubuntu-24.04-arm
     steps:
@@ -15,5 +15,3 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: "Run checks"
         run: nix flake check
-
-      
