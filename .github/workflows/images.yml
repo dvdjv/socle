@@ -14,16 +14,16 @@ jobs:
           name: socle
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: "Build Orange Pi 5 image"
-        run: nix build .templates/orangepi-5x#nixosConfigurations.orangepi5.config.system.build.sdImage
+        run: nix build ./templates/orangepi-5x#nixosConfigurations.orangepi5.config.system.build.sdImage
       - name: "Add Orange Pi 5 image artifact"
         uses: actions/upload-artifact@v4
         with:
           name: orangepi5-sd-image-aarch64-linux.img.zst
-          path: result/sd-image/nixos-sd-image-*-git-aarch64-linux.img.zst
+          path: result/sd-image/nixos-image-sd-card-*-aarch64-linux.img.zst
       - name: "Build Orange Pi 5 Plus image"
-        run: nix build .templates/orangepi-5x#nixosConfigurations.orangepi5plus.config.system.build.sdImage
+        run: nix build ./templates/orangepi-5x#nixosConfigurations.orangepi5plus.config.system.build.sdImage
       - name: "Add Orange Pi 5 Plus image artifact"
         uses: actions/upload-artifact@v4
         with:
           name: orangepi5-plus-sd-image-aarch64-linux.img.zst
-          path: result/sd-image/nixos-sd-image-*-git-aarch64-linux.img.zst
+          path: result/sd-image/nixos-image-sd-card-*-aarch64-linux.img.zst
