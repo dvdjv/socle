@@ -14,24 +14,67 @@ A collection of packages and modules to support NixOS on single-board computers 
 Socle provides a template you can use as a base for your new NixOS installation.
 
 ### Building an SD Image
+The easiest way to build an image is to use the provided flake template. The template contains NixOS configurations for Orange Pi 5 and Orange Pi 5 Plus.
+
 1. Clone the template:
    ```
    nix flake new --template github:dvdjv/socle nixos
    ```
-   This will create a directory named `nixos` with the system configuration in it.
-2. Edit the configuration:
+   This will create a directory named `nixos` with the system configurations in it.
+2. (Optional) Edit the configuration:
+   
+   Open the file `nixos/configuration.nix` in a text editor. To change the default user credentials, locate the following lines:
+   ```
+   users.users.nixos = {
+     isNormalUser = true;
+     password = "nixos";
+     extraGroups = [ "wheel" ];
+   };
+   ```
+   Adjust the username, password, and groups as you see fit. To change the timezone, locate the following lines:
+   ```
+   # You can set your timezone here
+   # time.timeZone = "Europe/Dublin";
+   ```
+   Uncomment the timezone option and insert your timezone.
+   
+   You can tune other options as well. Consult the [NixOS manual](https://nixos.org/manual/nixos/stable/options) for the list of possible options.
+   Board-specific options are set in the files `orangepi5.nix` and `orangepi5plus.nix`. Notice, that the default network name differs between the boards.
+4. Build the image
 
-   Open the file `nixos/flake.nix` in a text editor and locate the following lines:
+   On a `aarch64-linux` machine:
    ```
-   # socle.nixosModules.orangepi-5
-   # socle.nixosModules.orangepi-5-plus
+   nix build .#nixosConfigurations.orangepi5.config.system.build.sdImage
    ```
-   Uncomment one of the lines depending on the model of your board. You can tune other options as well. Consult the [NixOS manual](https://nixos.org/manual/nixos/stable/options) for the list of possible options.
-3. Build the image:
+   to build an Orange Pi 5 image; or:
    ```
-   nix build .#nixosConfigurations.nixos.sdImage
+   nix build .#nixosConfigurations.orangepi5plus.config.system.build.sdImage
    ```
-4. Flash the image:
+   to build an Orange Pi 5 Plus image.
+
+   On a `x86_64-linux` machine:
+
+   Cross compilation does not use the binary pachage cache and is prone to errors. It is recommended to use a `aarch64-linux` machine instead.
+
+   Locate the following lines in `configuration.nix`
+   ```
+   # to build on aarch64 machine
+   hostPlatform = { system = "aarch64-linux"; };
+
+   # to build on x86_64 machine
+   # hostPlatform = { system = "aarch64-linux"; };
+   # buildPlatform = { system = "x86_64-linux"; };
+   ```
+   and change it to
+   ```
+   # to build on aarch64 machine
+   # hostPlatform = { system = "aarch64-linux"; };
+   # to build on x86_64 machine
+   hostPlatform = { system = "aarch64-linux"; };
+   buildPlatform = { system = "x86_64-linux"; };
+   ```
+   Build the image as described above.
+6. Flash the image:
    ```
    zstdcat result/sd-image/nixos-sd-image-23.11pre-git-aarch64-linux.img.zst | dd of=/dev/sdX bs=1M
    ```
