@@ -15,6 +15,8 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: "Build Orange Pi 5 image"
         run: nix build ./templates/orangepi-5x#nixosConfigurations.orangepi5.config.system.build.sdImage
+      - name: "List files"
+        run: ls -R .
       - name: "Add Orange Pi 5 image artifact"
         uses: actions/upload-artifact@v4
         with:
