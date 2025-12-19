@@ -1,8 +1,14 @@
-{ pkgs }:
+{ lib, pkgs }:
 
-pkgs.substitute {
+pkgs.replaceVarsWith {
   src = ./extlinux-conf-builder.sh;
   isExecutable = true;
-  path = [pkgs.coreutils pkgs.gnused pkgs.gnugrep];
-  inherit (pkgs) bash;
+  replacements = {
+    path = lib.makeBinPath [
+      pkgs.coreutils
+      pkgs.gnused
+      pkgs.gnugrep
+    ];
+    inherit (pkgs) bash;
+  };
 }
