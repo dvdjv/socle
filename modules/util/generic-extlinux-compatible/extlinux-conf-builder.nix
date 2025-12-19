@@ -1,6 +1,6 @@
 { pkgs }:
 
-pkgs.substituteAll {
+pkgs.replaceVars {
   src = ./extlinux-conf-builder.sh;
   isExecutable = true;
   path = [pkgs.coreutils pkgs.gnused pkgs.gnugrep];
