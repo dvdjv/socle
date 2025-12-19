@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     socle = {
-      url = "github:dvdjv/socle/stable";
+      url = "github:dvdjv/socle";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
