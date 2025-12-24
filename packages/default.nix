@@ -9,6 +9,9 @@
   libmali-valhall-g610 = libmali-valhall-g610-g13p0;
   libmali-valhall-g610-g13p0 = libmali-valhall-g610-g13p0-x11-wayland-gbm;
 
+  rkmpp-1_0_8 = (pkgs.callPackage ./rkmpp {});
+  rkmpp = rkmpp-1_0_8;
+
   inherit (pkgs.callPackage ./libmali.nix {})
     mali-firmware-g610-g21p0-01eac0
     libmali-valhall-g610-g13p0-x11-wayland-gbm;
