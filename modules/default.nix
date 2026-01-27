@@ -100,8 +100,8 @@ self: rec {
         graphics.enable = true;
         graphics.extraPackages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.libmali-valhall-g610 ];
         firmware = lib.mkForce (with pkgs; [
-          self.packages.${pkgs.stdenv.buildPlatform.system}.orangepi-firmware
-          self.packages.${pkgs.stdenv.buildPlatform.system}.mali-firmware-g610
+          self.packages.${stdenv.buildPlatform.system}.orangepi-firmware
+          self.packages.${stdenv.buildPlatform.system}.mali-firmware-g610
         ]);
       };
     };
