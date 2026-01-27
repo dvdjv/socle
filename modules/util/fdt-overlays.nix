@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, ... }: let
   dtCfg = config.hardware.deviceTree;
 in {
   disabledModules = [ "system/boot/loader/generic-extlinux-compatible" ];
@@ -22,7 +22,7 @@ in {
   };
 
   config = lib.mkIf (dtCfg.enable) {
-    system.extraSystemBuilderCmds = ''
+    system.systemBuilderCommands = ''
         echo ${builtins.concatStringsSep " " dtCfg.enabledOverlays } > $out/devicetree-overlays
       '';
   };
