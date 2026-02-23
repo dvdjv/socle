@@ -1,0 +1,26 @@
+--- a/pkgconfig/rockchip_mpp.pc.cmake
++++ b/pkgconfig/rockchip_mpp.pc.cmake
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
++libdir=@CMAKE_INSTALL_LIBDIR@
++includedir=@CMAKE_INSTALL_INCLUDEDIR@
+ 
+ Name: rockchip_mpp
+ Description: Rockchip Media Process Platform
+diff --git a/pkgconfig/rockchip_vpu.pc.cmake b/pkgconfig/rockchip_vpu.pc.cmake
+index f5e7d634..eddbd31b 100644
+--- a/pkgconfig/rockchip_vpu.pc.cmake
++++ b/pkgconfig/rockchip_vpu.pc.cmake
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
++libdir=@CMAKE_INSTALL_LIBDIR@
++includedir=@CMAKE_INSTALL_INCLUDEDIR@
+ 
+ Name: rockchip_vpu
+ Description: Rockchip Media Process Platform (Legacy)
